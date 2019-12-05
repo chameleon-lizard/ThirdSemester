@@ -20,8 +20,21 @@ main(int argc, char *argv[])
     long long minimal_number = LLONG_MAX;
     size_t bytesRead = sizeof(current_number);
     int minimal_number_position = 0;
+    int n = read(file, &current_number, bytesRead);
+    if (n == 0) {
+        return 0;
+    } else {
+        if (current_number < minimal_number) {
+            if (current_number == LLONG_MIN) {
+                return 0;
+            }
 
-    for (int i = 0; read(file, &current_number, bytesRead) > 0; i++) {
+            minimal_number = current_number;
+            minimal_number_position = 0;
+        }
+    }
+
+    for (int i = 1; read(file, &current_number, bytesRead) > 0; i++) {
         if(current_number < minimal_number) {
             if (current_number == LLONG_MIN) {
                 return 0;

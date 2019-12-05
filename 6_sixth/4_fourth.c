@@ -17,14 +17,14 @@ main(int argc, char *argv[])
         return 1;
     }
 
-    char *s = calloc(PATH_MAX + 2, sizeof(*s));
+    char *s = calloc(PATH_MAX + 3, sizeof(*s));
     uid_t user_id = getuid();
     struct dirent *dd = 0;
     unsigned long long sum = 0;
 
     while ((dd = readdir(directory)) != 0) {
         struct stat buf = {};
-        snprintf(s, PATH_MAX + 1, "%s/%s", argv[1], dd->d_name);
+        snprintf(s, PATH_MAX + 2, "%s/%s", argv[1], dd->d_name);
 
         if (!strcmp(dd->d_name, ".") || !strcmp(dd->d_name, "..")) {
             continue;

@@ -24,13 +24,10 @@ main(void)
         size_t filename_length = strlen(filename);
     
         if (filename_length != 0) {
-            if (filename[filename_length - 1] == '\n') {
-                filename[filename_length - 1] = 0;
-    
-                filename_length = strlen(filename);
-        
-                if (filename[filename_length - 1] == '\r') {
-                    filename[filename_length - 1] = 0;
+            for (int i = 0; filename[i] != 0; i++) {
+                if (filename[i] == '\n' || filename[i] == '\r') {
+                    filename[i] = 0;
+                    break;
                 }
             }
         
@@ -38,13 +35,10 @@ main(void)
         
             if (file != NULL) {
                 char current_chars[AMOUNT_READ];
-                size_t count_read = 0;
-            
                 while (fgets(current_chars, sizeof(current_chars), file)) {
-                    count_read = strlen(current_chars);
-                    for (int j = 0; j < count_read; j++) {
-                        if (current_chars[j] >= '0' && current_chars[j] <= '9') {
-                            number_counts[current_chars[j] - '0']++;
+                    for (int i = 0; i < AMOUNT_READ && current_chars[i] != 0; i++) {
+                        if (current_chars[i] >= '0' && current_chars[i] <= '9') {
+                            number_counts[current_chars[i] - '0']++;
                         }
                     }
                 }

@@ -1,4 +1,3 @@
-#include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -14,12 +13,17 @@ main(void)
 
     scanf("%d", &n);
 
-    int *values = malloc(n * sizeof(long));
-    int *probabilities = malloc(n * sizeof(long));
+    int probabilities[UPPER_BOUND] = { 0 };
 
-
+    int prob_sum = 0;
     for (int i = 0; i < n; i++) {
-        scanf("%d %d", &values[i], &probabilities[i]);
+        int value = 0;
+        int probability = 0;
+        scanf("%d %d", &value, &probability);
+        for (int i = 0; i < probability; i++) {
+            probabilities[prob_sum] = value;
+            prob_sum++;
+        }
     }
 
     int m = 0;
@@ -29,18 +33,8 @@ main(void)
 
     for (int i = 0; i < m; i++) {
         int random_number = (int) (rand() / (RAND_MAX + 1.0) * UPPER_BOUND);
-
-        int prob_sum = 0;
-        for (int j = 0; j < n; j++) {
-            prob_sum += probabilities[j];
-            if (random_number < prob_sum) {
-                printf("%d ", values[j]);
-                break;
-            }
-        }
+        printf("%d\n", probabilities[random_number]);
     }
 
-    free(values);
-    free(probabilities);
     printf("\n");
 }

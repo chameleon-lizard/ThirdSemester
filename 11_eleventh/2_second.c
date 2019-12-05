@@ -3,20 +3,26 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int mode = 0;
+volatile int mode = 0;
+
+enum
+{
+    ADD_MODE = 0,
+    MULT_MODE = 1
+};
 
 void
 fsigsum(int sig)
 {
     signal(SIGINT, fsigsum);
-    mode = 0;
+    mode = ADD_MODE;
 }
 
 void
 fsigmul(int sig)
 {
     signal(SIGQUIT, fsigmul);
-    mode = 1;
+    mode = MULT_MODE;
 }
 
 int

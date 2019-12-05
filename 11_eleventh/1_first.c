@@ -3,14 +3,19 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int sigcount = 0;
+volatile int sigcount = 0;
+
+enum
+{
+    SIGNAL_AMOUNT = 5
+};
 
 void
 fsig(int sig)
 {
     signal(SIGHUP, fsig);
-    
-    if (sigcount != 5) {
+
+    if (sigcount != SIGNAL_AMOUNT) {
         printf("%d\n", sigcount);
         fflush(stdout);
         sigcount++;
@@ -27,7 +32,7 @@ main(void)
 
     while (1) {
         pause();
-        if (sigcount == 5) {
+        if (sigcount == SIGNAL_AMOUNT) {
             break;
         }
     }

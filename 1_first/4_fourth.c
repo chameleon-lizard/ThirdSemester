@@ -5,8 +5,6 @@ int mystrspccmp(const char *str1, const char *str2)
 {
     char is_first_run = 0;
 
-    printf("%d %d\n", *str1, *str2);
-
     while(*str1 && *str1 == *str2) {
         if(!is_first_run) {
             is_first_run = 1;
@@ -56,3 +54,13 @@ int mystrspccmp(const char *str1, const char *str2)
     return 0;
 }
 
+int
+main(void)
+{
+    char str1[6] = "Hello";
+    char str2[6] = "He lo";
+
+    printf("%d\n", mystrspccmp(str1, str2));
+
+    return 0;
+}
